@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/ChatModel.dart';
+import './chat_screen.dart';
 
 class ChatList extends StatefulWidget{
   @override
@@ -43,6 +44,12 @@ class _ChatListState extends State<ChatList>{
                 style: TextStyle(color: Colors.grey, fontSize: 15.0),
               ),
             ),
+            onTap: (){
+              var route = new MaterialPageRoute(
+                builder: (BuildContext  context) => new ChatScreen(name: messageData[i].name,)
+              );
+              Navigator.of(context).push(route);
+            },
           )
         ],
       ),
