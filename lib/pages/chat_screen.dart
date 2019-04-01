@@ -11,6 +11,10 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = new TextEditingController();
 
+  _handleSubmit(String text){
+    print(text);
+  }
+
   Widget _buildTextComposer() {
     return IconTheme(
         data: IconThemeData(color: Theme.of(context).accentColor),
@@ -22,7 +26,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 controller: _textController,
               )),
               Container(
-                child: IconButton(icon: Icon(Icons.send), onPressed: () {}),
+                child: IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () => _handleSubmit(_textController.text)),
               )
             ],
           ),
@@ -43,4 +49,41 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ));
   }
+}
+
+class ChatMessage extends StatelessWidget{
+  final String name;
+  final AnimationController animationController;
+  final String text;
+
+  ChatMessage({this.text,this.animationController, this.name});
+  @override
+  Widget build(BuildContext context) {
+    return SizeTransition(
+      sizeFactor: CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeOut
+      ),
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              child: CircleAvatar(child: Text(name[0])),
+            ),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Text(name),
+                  Container(
+                    child: Text(text),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }
